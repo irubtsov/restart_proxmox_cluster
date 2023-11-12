@@ -1,0 +1,28 @@
+---
+- hosts: all
+  serial: 1 #for step by step 
+  become: true
+  tasks:
+    - name: Запустить pve-cluster
+      service:
+        name: pve-cluster
+        state: restarted
+      become: yes
+    - name: Запустить pvedaemon
+      service:
+        name: pvedaemon
+        state: restarted
+      become: yes
+    - name: Запустить pveproxy 
+      service:
+        name: pveproxy
+        state: restarted
+      become: yes
+    - name: Запустить pvestatd
+      service:
+        name: pvestatd
+        state: restarted
+      become: yes
+    - name: Pause for 1 minutes to build app cache
+      ansible.builtin.pause:
+        minutes: 1
